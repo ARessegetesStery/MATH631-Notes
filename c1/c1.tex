@@ -8,6 +8,36 @@
 \tableofcontents  
 \clearpage
 
+\setcounter{section}{-1}
+
+\section{A Brief History of Algebraic Geometry}
+
+\textstart
+The initial purpose of studying algebraic geometry is to study the geometry specified by some algebraic relations, of which the most typical is roots of polynomials. The classical formulation (1900s) is as follows: given variables $x_1, \dots, x_n$ and polynomials $f_1, \dots, f_m \in \C[x_1, \dots, x_n]$, consider the space constitutes of the root of polynomials
+\[
+    \{ (x_1, \dots, x_n) \in \C^n \mid f_1(x_1, \dots, x_n) = \cdots = f_m(x_1, \dots, x_n) = 0 \}
+\]
+This is often referred to as \textbf{algebraic set} or \textbf{affine variety}. The goal is thus to study the topology induced by the subspace topology of $\C^n$.
+
+Up to this point, little ring theory is involved. However a non-negligible problem of this formulation is the loss of information in special cases where the space degenerate (in terms of dimension). For example, the following two spaces coincide for the underlying field being $\R$:
+\[
+    \{ (x, y) \in \R^2 \mid x = y = 0 \} 
+    \quad \text{vs.} \quad
+    \{ (x, y) \in \R^2 \mid x^2 + y^2 = 0 \}
+\]
+But the first set is merely a point while the second set is actually a dimension-1 manifold. Therefore, looking at the solution set itself may not be sufficient for understanding the topology of the underlying space.
+
+A ``modern'' approach (1960s) is to encode the polynomials in an algebraic structure. Instead of looking directly at the set, consider the quotient ring $\operatorname{Spec}(\C[x_1, \dots, x_n]/(f_1, \dots, f_m))$ where Spec$(\cdot)$ is a functor to a \textbf{scheme}; and the whole object is referred to as an \textbf{affine scheme}. There are additional structures on the scheme that encodes the geometric properties (for example being ``tangential'').
+
+\begin{remark}
+    The extra layer of abstraction (having ring theory involved) has various advantages in terms of studying the structure of algebra:
+    \begin{enumerate}
+        \item Taking the perspective from the ring theory in a sense eliminates the problem of coincide under degeneracy. Elaborating on the example above, $x^2 + y^2 = 0$ and $x = y = 0$ coincide in $\R$, but the induced schemes $\operatorname{Spec} \R[x, y]/(x^2 + y^2)$ and $\operatorname{Spec} \R[x, y]/(x, y)$ are completely different schemes.
+        \item It is hard to ``glue'' actual algebraic sets together, but gluing schemes is almost as easy as gluing topological spaces. An analogy that can be made here is the ``gluing'' of manifolds using charts.
+        \item As we will see later, schemes as a topological space is not necessarily Hausdorff (every pair of points can be separated by a neighborhood). Specifically, points are necessarily closed. Although this seems to be weird, this indicates that there are actually fewer opens, i.e. the topology is much simpler. This turns out to be an advantage of the construction.
+    \end{enumerate}
+\end{remark}
+
 \section{Presheaves and Sheaves}
 
 \section{Operation on Sheaves}
