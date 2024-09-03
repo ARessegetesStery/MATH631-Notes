@@ -40,6 +40,98 @@ A ``modern'' approach (1960s) is to encode the polynomials in an algebraic struc
 
 \section{Presheaves and Sheaves}
 
+\begin{definition}[Presheaf]
+    A \textbf{presheaf} (of sets) $\mathcal{F}$ on a topological space $X$ is a pair $\{\mathcal{F}(\cdot), r\}$ where
+    \begin{itemize}
+        \item $\mathcal{F}(U)$ is a set for any $U$ open in $X$.
+        \item A family of restriction maps $r_{uv}: \mathcal{F}(U) \to \mathcal{F}(V)$ for each $V \subseteq U \subseteq X$ opens, satisfying 
+        \[
+            r_{UU} = \Id_{\mathcal{F}(U)}, \qquad r_{VW} \circ r_{UV} = r_{UW}
+        \]
+    \end{itemize}
+\end{definition}
+\nogap
+\begin{remark}
+    A presheaf is equivalent to a contravariant functor.
+\end{remark}
+
+\begin{example}\label{ex: presheaf ex1}
+    Let $Y$ be a topological space. A presheaf $\mathcal{F}$ can be defined by setting $\mathcal{F}(U) = \{ \text{continuous maps } U \to Y \}$ and $r_{uv}$ to be the restriction of maps.
+\end{example}
+\nogap
+\begin{example}\label{ex: presheaf ex2}
+    Consider the ``trivial'' presheaf. Let $S$ be a set. For all $U$ and $V$, take $\mathcal{F}(U) = S$, and $r_{UV} = \Id_S$.
+\end{example}
+
+\begin{notation}
+    A presheaf $\mathcal{F}$ can be viewed as a structure defined ``above'' the topological space. One can expect that the notation will resemble that of vector bundles on manifolds (and there are more such analogies in subsequent objects):
+    \begin{enumerate}
+        \item Elements $s \in \mathcal{F}(U)$ are called \textbf{sections} of $\mathcal{F}$.
+        \item $r_{UV}(s)$ for $s \in \mathcal{F}(U)$ is often denoted by $\restr{s}{V}$ (as ``restrictions'').
+        \item $\mathcal{F}(U)$ will also appear using notation for sections in differential geometry, for example $\Gamma(U, \mathcal{F})$, or $H^0(U, \mathcal{F}) $.
+    \end{enumerate} 
+    When specifying a presheaf, one often omits the restriction maps if their definition is clear from context.
+\end{notation}
+
+\begin{definition}[Sheaf]
+    A \textbf{sheaf} (of sets) $\mathcal{F}$ on a topological space $X$ is a presheaf that satisfies the following additional axioms:
+    \begin{itemize}
+        \item \emph{Identity axiom}: (``sections are determined by their restriction to small opens'') Let $U \subseteq X$ be an open, and $\{ U_i \}_{i \in I}$ is an open cover of $U$. Then for $s_1, s_2 \in \mathcal{F}(U)$
+        \[
+            s_1 = s_2
+            \quad \Longleftrightarrow \quad
+            \restr{s_1}{U_i} = \restr{s_2}{U_i} \quad \forall i \in I
+        \]
+        \item \emph{Gluability axiom}: (``compatible sections can be glued'') Let $U \subseteq X$ be an open, and $\{ U_i \}_{i \in I}$ is an open cover of $U$. Then for $s_i \in \mathcal{F}(U_i)$ and $s_j \in \mathcal{F}(U_j)$ s.t. $\restr{s_i}{U_i \cap U_j} = \restr{s_j}{U_i \cap U_j}$, there exists $s \in \mathcal{F}(U)$ s.t. $\restr{s}{U_i} = s_i$ and $\restr{s}{U_j} = s_j$.
+    \end{itemize}
+\end{definition}
+
+\textstart
+One can also combine the two axioms described above into one:
+
+\begin{definition}[Sheaf, alternative]
+    A \textbf{sheaf} on a topological space $X$ is a presheaf satisfying the \emph{sheaf axiom}: If $\{ U_i \}_{i \in I}$ is an open cover of $U$ and for all $i$, $s_i \in \mathcal{F}(U_i)$ agreeing on pairwise intersections. Then there exists a \emph{unique} $s \in \mathcal{F}(U)$ with $s_i = \restr{s}{U_i}$.
+\end{definition}
+
+\begin{remark}
+    The gluability axiom specifies the existence of ``gluing'' of sections; and the identity axiom says that the resulting section is unique. It is clear that the two definitions are equivalent.
+\end{remark}
+
+\begin{example}
+    It is then natural to examine whether the examples (Example \ref{ex: presheaf ex1}, \ref{ex: presheaf ex2}) we looked at in the introduction of presheaves are sheaves:
+    \begin{enumerate}
+        \item Recall the first example of presheaf, given by continuous maps $\mathcal{F}(U) = \{ U \tooh{\text{cont.}} Y \}$. By definition two functions are identical if and only if they agree on all points, and functions can be glued uniquely from common domains. Continuity can be checked from on opens in a cover, as the source functions are continuous (recall that the topological definition of continuity is that the preimage of opens are open).
+        \item For the second example $\mathcal{F}(U) = S$, and $r_{UV} = \Id_S$ for all $U, V \subseteq S$ opens. This is actually \emph{not} a sheaf. Check the conditions respectively:
+        \begin{itemize}
+            \item \emph{Identity axiom}. This is not satisfied, as we have the special example $U = \emptyset$. Then $I = \emptyset \implies \{ U_i \} = \emptyset$. The axiom requires that any two elements in $\mathcal{F}(\emptyset)$ must be the same, but this will be not the case if the cardinality of $S$ is greater than 1. (That is, the restriction of opens to empty sets are not unique.)
+            \item \emph{Gluability axiom}. This is actually satisfied, as we can take apply the restriction map to the section $\mathcal{F}(U) = S$. Restriction maps here are uniquely determined as identities.
+        \end{itemize}
+    \end{enumerate}
+
+    Now we try to fix the second example to make it a sheaf: 
+    \begin{itemize}
+        \item An intuitive fix would be to fix $\mathcal{F}(\emptyset) = \{ \cdot \}$, a singleton set. This corresponds to $\mathcal{F}(U) = \{ U \tooh{\text{const.}} S \}$. But this fails gluability condition: Let $\mathcal{F}(U) = \Z$, and $U_1, U_2 \subseteq U$ disjoint with $\mathcal{F}(U_1) = 3, \mathcal{F}(U_2) = 4$. Transitivity of restrictions require $\mathcal{F}(\emptyset)$ contains the intersection of $\{3\}$ and $\{4\}$, which contradicts the premise that $\mathcal{F}(\emptyset)$ is a singleton.
+        \item This, however, can be fixed by restricting the constant condition to local, e.g. taking
+        \begin{align*}
+            \mathcal{F}(U)
+            & = \{ f: U \to S \text{ \underline{locally constant}, i.e. } \forall p \in U, \exists \text{ neighborhood where $f$ is constant} \} \\
+            & = \{ U \tooh{\text{cont.}} S, \text{where $S$ is given the \underline{discrete topology}, i.e. all subsets are open} \}
+        \end{align*}
+    \end{itemize}
+    \ 
+\end{example}
+\nogap
+\begin{remark}
+    The intuition of the (counter-)example above is that the sheaf condition can only make local restrictions (similar to charts in manifolds), as difference in global conditions cannot coincide on small opens. For example, $\mathcal{F}(U) = \{ U \to \R \text{ bounded} \}$ is not a sheaf on $X = \R^n$ as ``gluing'' sheaves would require taking infinitely many opens with different limits, thus resulting in a sheaf that is unbounded. A fix would be change the condition to $\mathcal{F}(U) = \{ U \to \R \text{ locally bounded} \}$.
+\end{remark}
+
+\begin{definition}[Constant Sheaf]
+    The resulting sheaf from the fix above is the \textbf{constant sheaf}. Given a topological space $X$ and a set $S$, the sheaf is denoted $\underline{S}$, i.e.
+    \[
+        \underline{S}(U) := \{ f: U \to S \text{ locally constant} \}
+    \]
+\end{definition}
+
 \section{Operation on Sheaves}
 
 \end{document}
