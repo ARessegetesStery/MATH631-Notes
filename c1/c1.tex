@@ -134,4 +134,73 @@ One can also combine the two axioms described above into one:
 
 \section{Operation on Sheaves}
 
+\textstart
+The next step is to construct sheaves based on existing ones. The idea would be viewing a sheaf on topological space $X$ as an additional structure on $X$ controlled by small opens, specified by the topology, i.e. thinking of $(X, \mathcal{F})$ as some ``augmented'' topological space.
+
+A first trivial example will be simply restricting the sheaf to a open subsets: if $\mathcal{F}$ is a sheaf on $X$ and $V \subseteq X$ open, then there is a sheaf $\restr{\mathcal{F}}{V}$ defined by $\restr{\mathcal{F}}{V}(U) = \mathcal{F}(U)$ for all $U \subseteq V$ open (and also $U$ open in $X$).
+
+Using the similar analogy to vector bundles, sheaves can be transitioned along maps:
+
+\begin{definition}[Pushforward Sheaf]
+    If $\mathcal{F}$ is a shaef on $X$, and $\pi: X \to Y$ continuous, then there is a sheaf $\pi_{\ast}\mathcal{F}$ on $Y$ defined by $\pi_{\ast}(\mathcal{F})(U) = \mathcal{F}(\pi^{-1}(U))$ for all $U \subseteq Y$ open.
+\end{definition}
+\nogap
+\begin{remark}
+    The pushforward sheaf is indeed a sheaf, as the open covers are transition by continuous maps. If $\{ U_i \}_{i \in I}$ is an open cover of $U \subseteq Y$ open, then $\{ \pi^{-1}(U_i) \}_{i \in I}$ is an open cover of $\pi^{-1}(U) \subseteq X$.
+\end{remark}
+
+For example, take $X = \{ \cdot \}$ a singleton set, and $Y$ any topological space. Let $p \in Y$ be a point, and $S$ be an arbitrary set. Take the constant sheaf $\underline{S}$ on $X$, and the continuous map $\iota_p: X \to Y, \cdot \mapsto p$. This pushforward sheaf is special and we give it a definition:
+
+\begin{definition}[Skyscraper sheaf]
+    The \textbf{skyscraper sheaf} is the sheaf $(\iota_p)_{\ast} \underline{S}$, i.e. explicitly
+    \[
+        (\iota_p)_{\ast} \underline{S}(U) = \underline{S}(\iota_p^{-1}(U)) =
+        \begin{cases}
+            S & \text{if $p \in U$} \\
+            \{ \cdot \} & \text{if $p \notin U$}
+        \end{cases}
+    \]
+\end{definition}
+
+\textstart
+The name of the skyscraper sheaf can be interpreted as the sheaf being ``concentrated'' at the point $p$, and sort of trivial elsewhere.
+
+\begin{example}
+    For understanding this example first supplement some necessary definitions:
+
+    \begin{definition}[Covering]
+        Let $X$ be a topological space. A \textbf{covering} of $X$ is a continuous map $\pi: \widetilde{X} \to X$ s.t. for every $x \in X$, there exists a neighborhood of $U_x$ of $x$, and index space $I_x$ s.t. $\pi^{-1} (U_x) = \bigsqcup_{d \in I_x} V_d$ and $\restr{\pi}{V_d}: V_d \to U_x$ is a homeomorphism for all $d \in I_x$.
+    \end{definition}
+
+    Let $\pi: \widetilde{X} \to X$ be a covering. Then $\pi_{\ast} \underline{S}$ encodes the number of connected components in $\pi^{-1}(U)$ for all $U$ open in $X$, as local constant properties extend to opens, which form connected components.
+\end{example}
+
+\begin{definition}[Sheaf of Section]
+    Let $\pi: Y \to X$ be a continuous map. Then the \textbf{sheaf of section} of $\pi$ is a sheaf $\mathcal{F}$ on $X$ given by
+    \[
+        \mathcal{F}(U) = \{ s: U \to Y  \text{ continuous sections of $\pi$ above $U$}\}
+    \]
+    i.e. making the following diagram commutative:
+
+    \begin{minipage}{\linewidth}
+        \centering
+        \begin{tikzcd}
+            Y \arrow[rrdd, "\pi"] & & \\
+            & & \\
+            U \arrow[uu, "s"] \arrow[rr, hookrightarrow] & & X
+        \end{tikzcd}
+    \end{minipage}
+    Restriction of functions are given by restriction of sections.
+\end{definition}
+\nogap
+\begin{example}
+    Consider the projection $\pi: Y \times X \to X$. Then $\mathcal{F}(U)$ are simply continuous maps from $U$ to $Y$.
+\end{example}
+
+\begin{remark}
+    Every sheaf is isomorphic to the sheaf of sections of some continuous map, analogous to the construction above. For example, for the skyscraper sheaf, $(\iota_p)_{\ast} S$ is isomorphic to the sheaf of sections where $Y = X \smallsetminus \{ p \} \cup S$, with topology properly defined s.t. the map $Y \to X, s \mapsto p$ and identity elsewhere is continuous.
+\end{remark}
+
+\section{Categorical Formulation of Sheaves}
+
 \end{document}
