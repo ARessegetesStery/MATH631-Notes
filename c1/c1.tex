@@ -141,7 +141,7 @@ A first trivial example will be simply restricting the sheaf to a open subsets: 
 
 Using the similar analogy to vector bundles, sheaves can be transitioned along maps:
 
-\begin{definition}[Pushforward Sheaf]
+\begin{definition}[Pushforward Sheaf]\label{def: pushforward sheaf}
     If $\mathcal{F}$ is a shaef on $X$, and $\pi: X \to Y$ continuous, then there is a sheaf $\pi_{\ast}\mathcal{F}$ on $Y$ defined by $\pi_{\ast}(\mathcal{F})(U) = \mathcal{F}(\pi^{-1}(U))$ for all $U \subseteq Y$ open.
 \end{definition}
 \nogap
@@ -202,5 +202,52 @@ The name of the skyscraper sheaf can be interpreted as the sheaf being ``concent
 \end{remark}
 
 \section{Categorical Formulation of Sheaves}
+
+\textstart
+Previously our definition of sheaves is restricted to sets. However, we have not used any additional property other than its elements. This then can be generalized to other categories. 
+
+Since the objects are clear, we only need to specify the morphisms between sheaves to have a category. An intuitive idea may be defining morphisms between arbitrary sheaves defined on arbitrary topological spaces. However the morphisms between the topological spaces may not be straightforward, and instead we require that all objects in the category should be defined on the same topological space. (Although in the upcoming definition on \underline{scheme}s, we will define morphisms like above).
+
+\begin{definition}[Category of (Pre)Sheaves on Sets]
+    Let $X$ be a topological space. The \textbf{category of sheaves} (of sets) on $X$, denoted $\catsets_X$, is defined by providing the following data:
+    \begin{itemize}
+        \item The objects of $\catsets_X$ are given by sheaves on $X$.
+        \item For $\mathcal{F}, \mathcal{G} \in \Ob(\catsets_X)$, a morphism $\pi: \mathcal{F} \to \mathcal{G}$ is a function $\pi(U): \mathcal{F}(U) \to \mathcal{G}(U)$ for each $U \subseteq X$ open s.t. it commutes with restrictions, i.e. the following diagram commutes:
+        
+        \begin{minipage}{\linewidth}
+            \centering
+            \begin{tikzcd}
+                \mathcal{F}(U) \arrow[rr] \arrow[dd, "\restr{(\cdot)}{V}"] & & \mathcal{G}(U) \arrow[dd, "\restr{(\cdot)}{V}"] \\
+                & & \\
+                \mathcal{F}(V) \arrow[rr] & & \mathcal{G}(V)
+            \end{tikzcd}
+        \end{minipage}
+        \item Identity morphism and composition of morphisms are given by the identity function and composition of functions.
+    \end{itemize}
+    Notice that when defining morphism we did not use any portion of the sheaf axiom. Therefore, we can define the category of presheaves on $X$ $\catsets_X^{\text{pre}}$ by replacing all occurrences of ``sheaf'' with ``presheaf''.
+\end{definition}
+
+\begin{example}
+    Let $\mathcal{F}$ be the sheaf on $X$ of continuous functions to $R$, i.e. $\mathcal{F}(U) = \{ U \tooh{\text{cont.}} \R \}$. Then $\pi: \mathcal{F} \to \mathcal{F}, s \mapsto 2s$ (in the sense of functions) is a morphism of sheaves. $\pi$ commutes with restrictions as scalar multiplication commutes with restriction for continuous functions.
+
+    Let $\mathcal{G} = (\iota_p)_{\ast} \underline{\R}$ on $X$, i.e. the skyscraper sheaf with set $\R$ at $p \in X$. Consider the morphism $ev: \mathcal{F} \to \mathcal{G}$ defined as
+    \[
+        \mathcal{F}(U) \ni s \mapsto
+        \begin{cases}
+            s(p) \in \R = \mathcal{G}(U), & \text{if $p \in U$} \\
+            \cdot \in \ \{ \cdot \} = \mathcal{G}(U), & \text{if $p \notin U$}
+        \end{cases}
+    \]
+    $ev$ also commutes with restrictions, as the evaluation will only change when the restriction to $V$ loses $p$; which is considered in both the morphism and restriction in $\mathcal{G}$.
+\end{example}
+
+\begin{remark}
+    In the previous section, we have introduced the restriction of sheaves and \hyperref[def: pushforward sheaf]{pushforward sheaves} $\mathcal{F} \mapsto \restr{\mathcal{F}}{V}$ and $\mathcal{F} \mapsto \pi_{\ast}\mathcal{F}$. They can be viewed as functors between the categories:
+    \[
+        \restr{(\cdot)}{V}: \catsets_X \to \catsets_V, \quad \pi_{\ast}: \catsets_X \to \catsets_Y
+    \]
+    It is clear from the definition how they transit objects. For morphisms, \TODO{finish}
+    
+\end{remark}
 
 \end{document}
